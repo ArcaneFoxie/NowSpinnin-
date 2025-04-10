@@ -16,6 +16,7 @@
   "private": true,
   "license": "ISC",
   "dependencies": {
+    "music-metadata": "^11.1.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },

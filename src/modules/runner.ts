@@ -1,3 +1,4 @@
+import { GetCoverFromFile } from "./metadata"
 import { SELECTED_RUNNER } from "src/types/common"
 import events from "./events"
 import Provider from "src/types/provider"
@@ -43,6 +44,7 @@ class Runner {
     if (newSong === null) { return }
 
     if (newSong.absolutepath === events.songData.absolutepath) { return }
+    newSong.coverArt = await GetCoverFromFile(newSong.absolutepath)
     events.updateSong(newSong)
   }
 }
