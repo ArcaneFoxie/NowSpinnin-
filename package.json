@@ -1,16 +1,14 @@
 {
-  "name": "botto",
+  "name": "nowspinnin-",
+  "prettyName": "NowSpinnin-",
   "version": "1.0.0",
-  "description": "botto",
+  "description": "",
   "main": "/src/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "build:linux": "rm -rf ./dist && tsc -p tsconfig.json",
     "start": "cross-env NODE_ENV=production node app.js",
-    "dev": "cross-env NODE_ENV=development npx tsx src/index.ts",
-    "lint": "pnpm eslint .",
-    "lint-fix": "pnpm eslint . --fix"
+    "dev": "cross-env NODE_ENV=development npx tsx src/index.ts"
   },
   "author": "Ahriana",
   "private": true,

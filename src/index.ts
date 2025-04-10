@@ -1,10 +1,11 @@
-import { OpenDefaultToPage } from "./modules/common"
+import { OpenDefaultToPage, setupApplication } from "./modules/common"
 import { SELECTED_RUNNER } from "./types/common"
 import http from "./modules/http"
 import Runner from "./modules/runner"
 import ws from "./modules/ws"
 
 async function begin () {
+  await setupApplication()
 
   const app = new Runner()
   await app.changeRunner(SELECTED_RUNNER.DJUCED)

@@ -1,10 +1,11 @@
-build
-node_modules
-src/configs/json
-src/files
 .vscode
-yarn.lock
-yarn-error.log
+build
 dist
 env.json
+node_modules
+NowSpinnin- data
 out
+src/configs/json
+src/files
+yarn-error.log
+yarn.lock
