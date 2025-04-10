@@ -16,13 +16,14 @@ class HTTPServer {
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.server = http.createServer(this.app)
-
-    this.connect()
   }
 
-  connect () {
-    this.server.listen(this.port, () => {
-      console.log(`Webserver listning on ${this.port}`)
+  connect (): Promise<void> {
+    return new Promise((resolve) => {
+      this.server.listen(this.port, () => {
+        console.log(`Webserver listning on ${this.port}`)
+        return resolve()
+      })
     })
   }
 }

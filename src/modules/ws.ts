@@ -7,11 +7,11 @@ class WSServer {
 
   constructor () {
     this.lastMessage = ''
-    this.connect()
   }
 
   connect () {
     this.server = new WebSocketServer({ server: HttpServer.server })
+
     this.server.on('connection', (ws: WebSocket) => {
       console.log('New WS connection')
 
