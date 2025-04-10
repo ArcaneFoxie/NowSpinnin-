@@ -1,30 +1,30 @@
-import { Database, open } from 'sqlite'
 import { homedir } from "os"
 import { join } from 'path'
 import Provider from "src/types/provider"
-import sqlite3 from 'sqlite3'
+import sqlite from 'node:sqlite'
 import type { Song } from "src/types/common"
 
 class DJUCED extends Provider {
-  db: Database
+  db: sqlite.DatabaseSync
   constructor () {
     super()
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async create() {
-    this.db = await open({
-      filename: join(homedir(), 'Documents', 'DJUCED', 'DJUCED.db'),
-      driver: sqlite3.Database
-    })
+    this.db = new sqlite.DatabaseSync(join(homedir(), 'Documents', 'DJUCED', 'DJUCED.db'), { readOnly: true })
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async getLatestSong() {
-    const res = await this.db.get<Song>('SELECT artist, title, absolutepath FROM tracks WHERE last_played IS NOT NULL ORDER BY last_played DESC LIMIT 1')
-    return res ?? null
+    const q = this.db.prepare('SELECT artist, title, absolutepath FROM tracks WHERE last_played IS NOT NULL ORDER BY last_played DESC LIMIT 1')
+    const r = q.all()[0] as unknown as Song
+    return r ?? null
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async dispose() {
-    await this.db.close()
+    this.db.close()
   }
 }
 
