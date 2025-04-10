@@ -1,0 +1,34 @@
+{
+  "name": "botto",
+  "version": "1.0.0",
+  "description": "botto",
+  "main": "/src/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:linux": "rm -rf ./dist && tsc -p tsconfig.json",
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=development npx tsx src/index.ts",
+    "lint": "pnpm eslint .",
+    "lint-fix": "pnpm eslint . --fix"
+  },
+  "author": "Ahriana",
+  "private": true,
+  "license": "ISC",
+  "dependencies": {
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@types/node": "^22.14.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.24.0",
+    "globals": "^16.0.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.1"
+  }
+}
