@@ -1,4 +1,5 @@
 import type { Song } from "src/types/common"
+import ws from "./ws"
 
 class Events {
   songData: Song
@@ -16,6 +17,7 @@ class Events {
     this.songData = song
 
     console.log('Updated song data', song)
+    ws.broadcast(song)
   }
 }
 
