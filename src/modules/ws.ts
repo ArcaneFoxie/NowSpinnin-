@@ -1,4 +1,5 @@
 import WebSocket, { WebSocketServer } from 'ws'
+import HttpServer from './http'
 
 class WSServer {
   server: WebSocketServer
@@ -10,7 +11,7 @@ class WSServer {
   }
 
   connect () {
-    this.server = new WebSocketServer({ port: 4578 })
+    this.server = new WebSocketServer({ server: HttpServer.server })
     this.server.on('connection', (ws: WebSocket) => {
       console.log('New WS connection')
 

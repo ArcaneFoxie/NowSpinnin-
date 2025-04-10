@@ -16,11 +16,13 @@
   "private": true,
   "license": "ISC",
   "dependencies": {
+    "express": "^5.1.0",
     "music-metadata": "^11.1.0",
     "ws": "^8.18.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
+    "@types/express": "^5.0.1",
     "@types/node": "^22.14.0",
     "@types/ws": "^8.18.1",
     "cross-env": "^7.0.3",
