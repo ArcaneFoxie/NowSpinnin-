@@ -1,0 +1,9 @@
+{
+  "main": "dist/bundle.js",
+  "output": "dist/sea-prep.blob",
+  "assets": {
+    "albumArt.html": "src/public/default_albumArt.html",
+    "songInfo.html": "src/public/default_songInfo.html",
+    "README.txt": "src/public/README.txt"
+  }
+}

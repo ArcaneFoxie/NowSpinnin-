@@ -1,0 +1,36 @@
+{
+  "name": "nowspinnin-",
+  "prettyName": "NowSpinnin-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "/src/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=development npx tsx src/index.ts"
+  },
+  "author": "ArcaneFoxie",
+  "private": true,
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "music-metadata": "^11.1.0",
+    "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "@types/ws": "^8.18.1",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.25.2",
+    "eslint": "^9.24.0",
+    "globals": "^16.0.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.1"
+  }
+}

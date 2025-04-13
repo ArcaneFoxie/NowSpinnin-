@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Album Art Display</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        #albumArt {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        .no-art {
+            color: #fff;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <img id="albumArt" style="display: none" alt="Album Art">
+    <div id="noArt" class="no-art">No album art available</div>
+
+    <script>
+        const albumArt = document.getElementById('albumArt')
+        const noArt = document.getElementById('noArt')
+        
+        function connectWebSocket() {
+            const ws = new WebSocket(`ws://localhost:4578`)
+            
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data)
+                if (data.coverArt) {
+                    albumArt.src = data.coverArt
+                    albumArt.style.display = 'block'
+                    noArt.style.display = 'none'
+                } else {
+                    albumArt.style.display = 'none'
+                    noArt.style.display = 'block'
+                }
+            }
+
+            ws.onclose = () => {
+                setTimeout(connectWebSocket, 1000)
+            }
+        }
+
+        connectWebSocket()
+    </script>
+</body>
+</html> 
