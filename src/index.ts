@@ -14,7 +14,7 @@ async function begin () {
   await http.connect()
   ws.connect()
 
-  await OpenDefaultToPage()
+  OpenDefaultToPage().catch(console.error)
 }
 
 begin().catch(console.error)

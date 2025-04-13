@@ -8,8 +8,14 @@ A powerful and flexible DJ track information display system that captures and sh
 
 ## Supported Platforms
 
+### Windows
 - DJUCED
 - Mixxx
+
+### Linux
+- Mixxx (Flatpak)
+
+Want to see support for more platforms or operating systems? [Open an issue](https://github.com/ArcaneFoxie/NowSpinnin-/issues) to let us know!
 
 ## Features
 

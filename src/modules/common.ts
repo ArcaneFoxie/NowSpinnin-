@@ -6,10 +6,19 @@ import { join } from 'path'
 import configManager from './configManager'
 import Stream from 'stream'
 import Webserver from './http'
+import { platform } from 'os'
 
 export async function OpenDefaultToPage (): Promise<string> {
+  const url = `http://localhost:${Webserver.port}/config`
+  
+  const commands = {
+    win32: `start "" "${url}"`,
+    linux: `xdg-open "${url}"`
+  }
+
   return new Promise((resolve, reject) => {
-    exec(`start http://localhost:${Webserver.port}/config`, (err, stdout) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    exec(commands[platform()], (err, stdout) => {
       if (err) { return reject(err) }
       return resolve(stdout)
     })

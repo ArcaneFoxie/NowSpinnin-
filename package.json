@@ -8,7 +8,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "cross-env NODE_ENV=production node app.js",
-    "dev": "cross-env NODE_ENV=development npx tsx src/index.ts"
+    "dev": "cross-env NODE_ENV=development npx tsx src/index.ts",
+    "compile": "node scripts/compile.js",
+    "compile:win": "compile.bat",
+    "compile:linux": "bash compile.sh",
+    "postinstall": "node scripts/setup-platform.js"
   },
   "author": "ArcaneFoxie",
   "private": true,

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/require-await */
+import { homedir, platform } from 'os'
 import { join } from 'path'
 import Provider from "src/types/provider"
 import sqlite from 'node:sqlite'
@@ -5,16 +7,24 @@ import type { Song } from "src/types/common"
 
 class Mixxx extends Provider {
   db: sqlite.DatabaseSync
+
   constructor () {
     super()
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async create() {
-    this.db = new sqlite.DatabaseSync(join(process.env.LOCALAPPDATA!, 'Mixxx', 'mixxxdb.sqlite'), { readOnly: true })
+  getDbPath () {
+    const paths: Record<string, () => string> = {
+      win32: () => join(process.env.LOCALAPPDATA!, 'Mixxx', 'mixxxdb.sqlite'),
+      linux: () => join(homedir(), '.var', 'app', 'org.mixxx.Mixxx', '.mixxx', 'mixxxdb.sqlite'),
+    }
+  
+    return paths[process.platform]()
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+  async create() {
+    this.db = new sqlite.DatabaseSync(this.getDbPath(), { readOnly: true })
+  }
+
   async getLatestSong() {
     const q = this.db.prepare(`
       SELECT 
@@ -46,7 +56,6 @@ class Mixxx extends Provider {
     return ret as Song
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   async dispose() {
     this.db.close()
   }
