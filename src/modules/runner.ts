@@ -23,6 +23,8 @@ class Runner {
     switch (target) {
       case SELECTED_RUNNER.DJUCED: 
         return (await import('./../providers/DJUCED')).default
+      case SELECTED_RUNNER.Mixxx: 
+        return (await import('./../providers/Mixxx')).default
       
       default: 
         return (await import('./../types/provider')).default

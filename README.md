@@ -6,6 +6,11 @@ A powerful and flexible DJ track information display system that captures and sh
 
 ![image](https://github.com/user-attachments/assets/fcc39ec3-b5e4-48be-974f-e92bf942c9f4)
 
+## Supported Platforms
+
+- DJUCED
+- Mixxx
+
 ## Features
 
 - 🎵 Real-time track information detection from DJ software
