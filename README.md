@@ -4,7 +4,7 @@ A powerful and flexible DJ track information display system that captures and sh
 
 ![image](https://github.com/user-attachments/assets/4baf02dd-8f63-4e1b-8f52-6aa5eff41d4a)
 
-![image](https://github.com/user-attachments/assets/fcc39ec3-b5e4-48be-974f-e92bf942c9f4)
+![image](https://github.com/user-attachments/assets/df7c7611-acae-49a9-ac6e-c7ca1a540736)
 
 ## Supported Platforms
 
