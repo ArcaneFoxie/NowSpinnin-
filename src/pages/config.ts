@@ -2,6 +2,25 @@ import { join } from 'path'
 import { readdir } from 'fs/promises'
 import { SELECTED_RUNNER } from './../types/common'
 import http from './../modules/http'
+import pkg from '../../package.json'
+
+const GITHUB_REPO = 'ArcaneFoxie/NowSpinnin-'  // Update this with your actual GitHub repository
+
+interface GitHubRelease {
+  tag_name: string;
+}
+
+async function checkLatestVersion() {
+  try {
+    const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`)
+    if (!response.ok) return null
+    const data = await response.json() as GitHubRelease
+    return data.tag_name.replace('v', '')
+  } catch (error) {
+    console.error('Error checking latest version:', error)
+    return null
+  }
+}
 
 function getSupportedRunners () {
   const values = Object.values(SELECTED_RUNNER)
@@ -34,6 +53,10 @@ async function renderLinks () {
 }
 
 export default async function () {
+  const currentVersion = pkg.version
+  const latestVersion = await checkLatestVersion()
+  const isOutdated = latestVersion && currentVersion < latestVersion
+
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -47,34 +70,43 @@ export default async function () {
               line-height: 1.6;
               margin: 0;
               padding: 20px;
-              background: #f5f5f5;
-              color: #333;
+              background: #1a1a1a;
+              color: #e0e0e0;
           }
           .container {
               max-width: 600px;
               margin: 40px auto;
               padding: 20px;
-              background: white;
+              background: #2d2d2d;
               border-radius: 8px;
-              box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              box-shadow: 0 2px 4px rgba(0,0,0,0.2);
           }
           h1 {
-              color: #2c3e50;
+              color: #fff;
               margin-bottom: 30px;
               text-align: center;
+          }
+          h2 {
+              color: #fff;
           }
           .software-select {
               width: 100%;
               padding: 12px;
               margin-bottom: 20px;
-              border: 2px solid #ddd;
+              border: 2px solid #404040;
               border-radius: 6px;
               font-size: 16px;
               transition: border-color 0.3s;
+              background: #363636;
+              color: #e0e0e0;
           }
           .software-select:focus {
               outline: none;
               border-color: #3498db;
+          }
+          .software-select option {
+              background: #363636;
+              color: #e0e0e0;
           }
           .save-btn {
               display: block;
@@ -99,9 +131,9 @@ export default async function () {
           .file-list {
               margin-top: 30px;
               padding: 15px;
-              background: #f8f9fa;
+              background: #363636;
               border-radius: 6px;
-              border: 1px solid #dee2e6;
+              border: 1px solid #404040;
           }
           .file-link {
               display: inline-block;
@@ -111,13 +143,52 @@ export default async function () {
           }
           .file-link:hover {
               text-decoration: underline;
-              color: #2980b9;
+              color: #5dade2;
+          }
+          .version-info {
+              margin: 20px 0;
+              padding: 10px;
+              border-radius: 6px;
+              text-align: center;
+              background: #363636;
+              border: 1px solid #404040;
+          }
+          .version-current {
+              font-weight: bold;
+              color: #e0e0e0;
+          }
+          .version-outdated {
+              background: #453a16;
+              color: #ffd866;
+              border: 1px solid #665c2e;
+          }
+          .version-error {
+              background: #442326;
+              color: #ff8b8b;
+              border: 1px solid #662d32;
+          }
+          .github-link {
+              color: #3498db;
+              text-decoration: none;
+              margin-left: 10px;
+          }
+          .github-link:hover {
+              text-decoration: underline;
+              color: #5dade2;
           }
       </style>
   </head>
   <body>
       <div class="container">
           <h1>DJ Display Configuration</h1>
+          
+          <div class="version-info ${isOutdated ? 'version-outdated' : ''} ${!latestVersion ? 'version-error' : ''}">
+              <span class="version-current">Current Version: v${currentVersion}</span>
+              <a href="https://github.com/${GITHUB_REPO}" target="_blank" class="github-link">View on GitHub</a>
+              ${isOutdated ? `<br>New version available: ${latestVersion}` : ''}
+              ${!latestVersion ? '<br>Unable to check for updates' : ''}
+          </div>
+
           <form id="configForm">
               <select class="software-select" id="software" name="software">
                 ${getSupportedRunners()}
