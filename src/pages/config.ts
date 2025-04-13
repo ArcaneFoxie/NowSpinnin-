@@ -63,7 +63,7 @@ export default async function () {
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>DJ Display Configuration</title>
+      <title>NowSpinnin- Configuration</title>
       <style>
           body {
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -180,7 +180,7 @@ export default async function () {
   </head>
   <body>
       <div class="container">
-          <h1>DJ Display Configuration</h1>
+          <h1>NowSpinnin- Configuration</h1>
           
           <div class="version-info ${isOutdated ? 'version-outdated' : ''} ${!latestVersion ? 'version-error' : ''}">
               <span class="version-current">Current Version: v${currentVersion}</span>
