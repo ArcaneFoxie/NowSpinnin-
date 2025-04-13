@@ -2,6 +2,10 @@
 
 A powerful and flexible DJ track information display system that captures and shares currently playing track information from various DJ software platforms. Perfect for streamers and DJs who want to display their currently playing tracks in OBS or other broadcasting software.
 
+![image](https://github.com/user-attachments/assets/4baf02dd-8f63-4e1b-8f52-6aa5eff41d4a)
+
+![image](https://github.com/user-attachments/assets/fcc39ec3-b5e4-48be-974f-e92bf942c9f4)
+
 ## Features
 
 - 🎵 Real-time track information detection from DJ software
