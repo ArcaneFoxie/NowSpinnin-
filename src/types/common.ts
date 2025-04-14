@@ -3,5 +3,6 @@ export interface Song { artist: string | null, title: string | null, absolutepat
 export enum SELECTED_RUNNER {
   NONE,
   DJUCED,
-  Mixxx
+  Mixxx,
+  VirtualDJ
 }

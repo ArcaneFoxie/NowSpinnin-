@@ -11,6 +11,7 @@ A powerful and flexible DJ track information display system that captures and sh
 ### Windows
 - DJUCED
 - Mixxx
+- VirtualDJ
 
 ### Linux
 - Mixxx (Flatpak)
