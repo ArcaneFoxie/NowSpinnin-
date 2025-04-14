@@ -27,6 +27,8 @@ class Runner {
         return (await import('./../providers/Mixxx')).default
       case SELECTED_RUNNER.VirtualDJ: 
         return (await import('./../providers/VirtualDJ')).default
+      case SELECTED_RUNNER.Traktor: 
+        return (await import('./../providers/Traktor')).default
       
       default: 
         return (await import('./../types/provider')).default

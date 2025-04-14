@@ -4,5 +4,6 @@ export enum SELECTED_RUNNER {
   NONE,
   DJUCED,
   Mixxx,
-  VirtualDJ
+  VirtualDJ,
+  Traktor
 }

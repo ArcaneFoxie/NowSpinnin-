@@ -6,6 +6,7 @@ import http from 'http'
 
 import config from './../routes/config'
 import nowplaying from './../routes/nowplaying'
+import updaters from './../routes/updaters'
 
 
 class HTTPServer {
@@ -25,9 +26,15 @@ class HTTPServer {
     // Routes
     this.app.use('/config', config)
     this.app.use('/nowplaying', nowplaying)
+    this.app.use('/updaters', updaters)
 
     this.publicPath = isSea() ? join(baseDirectory, 'public') : join(_dirname(), 'src', 'public')
     this.app.use('/public', express.static(this.publicPath))
+
+    this.app.all(/(.*)/, (req, res, next) => {
+      console.log(req.url, req.body)
+      next()
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.server = http.createServer(this.app)

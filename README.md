@@ -18,6 +18,7 @@ Come hang out, get support, share your setups, or just vibe with us:\
 - DJUCED
 - Mixxx
 - VirtualDJ
+- Traktor
 
 ### Linux
 - Mixxx (Flatpak)
