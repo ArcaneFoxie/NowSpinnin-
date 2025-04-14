@@ -13,22 +13,50 @@ interface CONFIG {
   }
 }
 
+const defaultConfig: CONFIG = {
+  selectedRunner: SELECTED_RUNNER.NONE,
+  osc: {
+    enabled: false,
+    targetPort: 7000
+  }
+}
+
+function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial<T>): T {
+  for (const key in source) {
+    const sourceValue = source[key]
+    const targetValue = target[key]
+
+    if (
+      typeof sourceValue === "object" &&
+      sourceValue !== null &&
+      !Array.isArray(sourceValue) &&
+      typeof targetValue === "object" &&
+      targetValue !== null &&
+      !Array.isArray(targetValue)
+    ) {
+      target[key] = deepMerge(
+        targetValue as Record<string, unknown>,
+        sourceValue as Record<string, unknown>
+      ) as T[typeof key]
+    } else if (sourceValue !== undefined) {
+      target[key] = sourceValue as T[typeof key]
+    }
+  }
+
+  return target
+}
+
 export class configManager {
   private _config: CONFIG
   configFile: string
 
   constructor () {
     this.configFile = join(baseDirectory, 'config.json')
-    
-    const baseConfig = {
-      selectedRunner: SELECTED_RUNNER.NONE,
-      osc: {
-        enabled: false,
-        targetPort: 7000
-      }
-    }
+    this._config = this.wrapWithProxy({ ...defaultConfig })
+  }
 
-    this._config = new Proxy(baseConfig, {
+  private wrapWithProxy(config: CONFIG): CONFIG {
+    return new Proxy(config, {
       set: (target, property, value) => {
         target[property as keyof typeof target] = value
         void this.save()
@@ -42,19 +70,20 @@ export class configManager {
   }
 
   set config(value: CONFIG) {
-    this._config = new Proxy(value, {
-      set: (target, property, value) => {
-        target[property as keyof typeof target] = value
-        void this.save()
-        return true
-      }
-    })
+    this._config = this.wrapWithProxy(value)
     void this.save()
   }
 
   async load () {
-    const loadedConfig = JSON.parse((await readFile(this.configFile)).toString())
-    this.config = loadedConfig
+    try {
+      const loadedRaw = await readFile(this.configFile, "utf-8")
+      const loadedConfig = JSON.parse(loadedRaw) as Partial<CONFIG>
+      const mergedConfig = deepMerge({ ...defaultConfig }, loadedConfig)
+      this.config = mergedConfig
+    } catch (e) {
+      console.warn("Error loading config, using defaults:", e)
+      this.config = { ...defaultConfig }
+    }
   }
 
   async save () {
