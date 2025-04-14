@@ -6,15 +6,18 @@ import type { Song } from "src/types/common"
 class Traktor extends Provider {
   deckData: Record<string, Song> = {}
   currentSong: Song
+  additionalData: any
 
   constructor () {
     super()
 
+    this.additionalData = {}
     this.currentSong = {
       artist: "",
       title: "",
       absolutepath: "",
-      coverArt: null 
+      coverArt: null,
+      additionalData: {}
     }
   }
 
@@ -37,7 +40,8 @@ class Traktor extends Provider {
       absolutepath: data.absolutepath,
       title: data.title,
       artist: data.artist,
-      coverArt: null
+      coverArt: null,
+      additionalData: data.additionalData
     }
   }
 

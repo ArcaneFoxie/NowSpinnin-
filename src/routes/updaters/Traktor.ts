@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { SELECTED_RUNNER } from 'src/types/common'
+import { SELECTED_RUNNER, additionalData } from 'src/types/common'
 import app from './../../modules/runner'
 import Traktor from 'src/providers/Traktor'
 
@@ -47,7 +47,8 @@ router.post('/deckLoaded/:deck', (req, res, next) => {
     absolutepath: body.filePath,
     title: body.title,
     artist: body.artist,
-    coverArt: null
+    coverArt: null,
+    additionalData: req.body as additionalData
   })
 
   // console.log('/deckLoaded/:deck', req.params.deck, req.body)

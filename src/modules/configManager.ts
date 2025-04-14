@@ -5,7 +5,13 @@ import { makeFile } from "./common"
 import { readFile } from "fs/promises"
 import { SELECTED_RUNNER } from "src/types/common"
 
-interface CONFIG { selectedRunner: SELECTED_RUNNER }
+interface CONFIG { 
+  selectedRunner: SELECTED_RUNNER,
+  osc: {
+    enabled: boolean,
+    targetPort: number
+  }
+}
 
 export class configManager {
   private _config: CONFIG
@@ -15,7 +21,11 @@ export class configManager {
     this.configFile = join(baseDirectory, 'config.json')
     
     const baseConfig = {
-      selectedRunner: SELECTED_RUNNER.NONE
+      selectedRunner: SELECTED_RUNNER.NONE,
+      osc: {
+        enabled: false,
+        targetPort: 7000
+      }
     }
 
     this._config = new Proxy(baseConfig, {
