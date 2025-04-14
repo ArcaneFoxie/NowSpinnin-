@@ -20,7 +20,8 @@ class VirtualDJ extends Provider {
       artist: "",
       title: "",
       absolutepath: "",
-      coverArt: null 
+      coverArt: null,
+      additionalData: {}
     }
   }
 
@@ -49,7 +50,8 @@ class VirtualDJ extends Provider {
       artist: artist,
       title: title,
       absolutepath: lastTwoLines[1],
-      coverArt: null 
+      coverArt: null,
+      additionalData: {}
     }
 
     this.cachedSong = ret

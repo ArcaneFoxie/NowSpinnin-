@@ -50,7 +50,7 @@ class Mixxx extends Provider {
       artist: r.artist,
       title: r.title,
       absolutepath: r.location,
-      coverArt: null 
+      coverArt: null
     }
 
     return ret as Song
