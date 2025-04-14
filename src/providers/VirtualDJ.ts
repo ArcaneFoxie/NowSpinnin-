@@ -7,17 +7,33 @@ import type { Song } from "src/types/common"
 
 // TODO: Make this better... this cant be the best way...
 class VirtualDJ extends Provider {
+  cachedSong: Song
   filePath: string
+  lastModified: number
+  tracklistPath: string
 
   constructor () {
     super()
+
+    this.lastModified = 0
+    this.cachedSong = {
+      artist: "",
+      title: "",
+      absolutepath: "",
+      coverArt: null 
+    }
   }
 
   async create() {
     this.filePath = join(homedir(), 'Documents', 'VirtualDJ', 'History')
+    this.tracklistPath = join(this.filePath, 'tracklist.txt')
   }
 
   async getLatestSong() {
+    const fileStat = await stat(this.tracklistPath)
+
+    if (fileStat.mtimeMs === this.lastModified) { return this.cachedSong }
+    this.lastModified = fileStat.mtimeMs
 
     const m3uFile = await this.getLatestM3UFile(this.filePath)
     if (!m3uFile) { return null }
@@ -35,6 +51,8 @@ class VirtualDJ extends Provider {
       absolutepath: lastTwoLines[1],
       coverArt: null 
     }
+
+    this.cachedSong = ret
 
     return ret as Song
   }
