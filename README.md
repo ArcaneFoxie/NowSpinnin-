@@ -39,6 +39,11 @@ Want to see support for more platforms or operating systems? [Open an issue](htt
 
 The application can be configured through the web interface or by modifying the configuration files in the application directory.
 
+## Platform specific requirements
+
+### Traktor
+Traktor requires a plugin to export the data to NowSpinnin~ the plugin and instructions can be found here: https://github.com/ArcaneFoxie/traktor-api-client
+
 ## API Endpoints
 
 ### REST API
