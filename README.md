@@ -6,6 +6,12 @@ A powerful and flexible DJ track information display system that captures and sh
 
 ![image](https://github.com/user-attachments/assets/df7c7611-acae-49a9-ac6e-c7ca1a540736)
 
+## 🎧 Join the Community
+
+NowSpinnin’ is powered by the **The Fox Burrow** community.\
+Come hang out, get support, share your setups, or just vibe with us:\
+👉 [Join the Discord](https://discord.gg/ZxVqmDwn3r)
+
 ## Supported Platforms
 
 ### Windows
