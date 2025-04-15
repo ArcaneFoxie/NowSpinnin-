@@ -12,8 +12,6 @@
     "compile": "node scripts/compile.js",
     "compile:win": "compile.bat",
     "compile:unix": "bash compile.sh",
-    "compile:linux": "npm run compile:unix",
-    "compile:mac": "npm run compile:unix",
     "postinstall": "node scripts/setup-platform.js"
   },
   "author": "ArcaneFoxie",
