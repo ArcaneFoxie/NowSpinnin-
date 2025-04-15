@@ -3,9 +3,10 @@ import { platform } from 'os'
 import { join } from 'path'
 
 async function setupPlatform() {
-    const isLinux = platform() !== 'win32'
+    const currentPlatform = platform()
+    const isUnixLike = currentPlatform === 'linux' || currentPlatform === 'darwin'
     
-    if (isLinux) {
+    if (isUnixLike) {
         try {
             // Make compile.sh executable
             await chmod('compile.sh', 0o755)

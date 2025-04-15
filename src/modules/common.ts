@@ -13,7 +13,8 @@ export async function OpenDefaultToPage (): Promise<string> {
   
   const commands = {
     win32: `start "" "${url}"`,
-    linux: `xdg-open "${url}"`
+    linux: `xdg-open "${url}"`,
+    darwin: `open "${url}"`
   }
 
   return new Promise((resolve, reject) => {
