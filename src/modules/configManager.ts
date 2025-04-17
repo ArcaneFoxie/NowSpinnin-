@@ -2,14 +2,15 @@
 import { baseDirectory } from "./paths"
 import { join } from "path"
 import { makeFile } from "./common"
+import { OSC_TYPE, SELECTED_RUNNER } from "src/types/common"
 import { readFile } from "fs/promises"
-import { SELECTED_RUNNER } from "src/types/common"
 
 interface CONFIG { 
   selectedRunner: SELECTED_RUNNER,
   osc: {
     enabled: boolean,
-    targetPort: number
+    targetPort: number,
+    remapped: Record<string, { path: string, type: OSC_TYPE }[]>
   }
 }
 
@@ -17,7 +18,10 @@ const defaultConfig: CONFIG = {
   selectedRunner: SELECTED_RUNNER.NONE,
   osc: {
     enabled: false,
-    targetPort: 7000
+    targetPort: 7000,
+    remapped: {
+
+    }
   }
 }
 

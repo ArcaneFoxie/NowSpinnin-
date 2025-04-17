@@ -15,3 +15,10 @@ export enum SELECTED_RUNNER {
   VirtualDJ,
   Traktor
 }
+
+export enum OSC_TYPE {
+  INT,
+  FLAOT,
+  STRING,
+  BLOB
+}
