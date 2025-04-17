@@ -23,6 +23,9 @@ Come hang out, get support, share your setups, or just vibe with us:\
 ### Linux
 - Mixxx (Flatpak)
 
+### MacOS
+- Traktor
+
 Want to see support for more platforms or operating systems? [Open an issue](https://github.com/ArcaneFoxie/NowSpinnin-/issues) to let us know!
 
 ## Features
