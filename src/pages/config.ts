@@ -3,8 +3,9 @@ import { readdir } from 'fs/promises'
 import { SELECTED_RUNNER } from './../types/common'
 import http from './../modules/http'
 import pkg from '../../package.json'
+import configManager from './../modules/configManager'
 
-const GITHUB_REPO = 'ArcaneFoxie/NowSpinnin-'  // Update this with your actual GitHub repository
+const GITHUB_REPO = 'ArcaneFoxie/NowSpinnin-'
 
 interface GitHubRelease {
   tag_name: string;
@@ -24,7 +25,10 @@ async function checkLatestVersion() {
 
 function getSupportedRunners () {
   const values = Object.values(SELECTED_RUNNER)
-  return values.filter(k => isNaN(Number(k))).map((v) => `<option value="${v}">${v}</option>`).join('\n')
+  return values
+    .filter(k => isNaN(Number(k)))
+    .map((v) => `<option value="${v}" ${v === SELECTED_RUNNER[configManager.config.selectedRunner] ? 'selected' : ''}>${v}</option>`)
+    .join('\n')
 }
 
 async function getPublicFiles(dir: string) {
