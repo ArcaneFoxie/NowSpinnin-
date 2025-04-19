@@ -15,7 +15,7 @@ class OSC {
       case OSC_TYPE.INT:
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return parseInt(value, 10)
-      case OSC_TYPE.FLAOT:
+      case OSC_TYPE.FLOAT:
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return parseFloat(value)
       case OSC_TYPE.STRING:

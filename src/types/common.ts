@@ -27,7 +27,7 @@ export enum SELECTED_RUNNER {
 
 export enum OSC_TYPE {
   INT,
-  FLAOT,
+  FLOAT,
   STRING,
   BLOB
 }
