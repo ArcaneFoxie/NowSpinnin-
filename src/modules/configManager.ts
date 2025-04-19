@@ -1,18 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { baseDirectory } from "./paths"
+import { CONFIG, SELECTED_RUNNER } from "src/types/common"
 import { join } from "path"
 import { makeFile } from "./common"
-import { OSC_TYPE, SELECTED_RUNNER } from "src/types/common"
 import { readFile } from "fs/promises"
-
-interface CONFIG { 
-  selectedRunner: SELECTED_RUNNER,
-  osc: {
-    enabled: boolean,
-    targetPort: number,
-    remapped: Record<string, { path: string, type: OSC_TYPE }[]>
-  }
-}
 
 const defaultConfig: CONFIG = {
   selectedRunner: SELECTED_RUNNER.NONE,

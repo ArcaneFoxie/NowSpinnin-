@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { readdir } from 'fs/promises'
-import { SELECTED_RUNNER } from './../types/common'
+import { SELECTED_RUNNER, OSC_TYPE } from './../types/common'
 import configManager from './../modules/configManager'
 import http from './../modules/http'
 import pkg from '../../package.json'
@@ -259,6 +259,99 @@ export default async function () {
               padding-bottom: 10px;
               border-bottom: 1px solid #404040;
           }
+          
+          .osc-mappings {
+              margin-top: 20px;
+              padding: 15px;
+              background: #363636;
+              border-radius: 6px;
+              border: 1px solid #404040;
+          }
+          
+          .mapping-group {
+              margin-bottom: 20px;
+              padding: 15px;
+              background: #2d2d2d;
+              border-radius: 6px;
+          }
+          
+          .mapping-source {
+              margin-bottom: 10px;
+          }
+          
+          .mapping-targets {
+              margin-left: 20px;
+          }
+          
+          .mapping-item {
+              display: grid;
+              grid-template-columns: 1fr auto auto;
+              gap: 10px;
+              margin-bottom: 10px;
+              padding: 10px;
+              background: #363636;
+              border-radius: 4px;
+              align-items: center;
+          }
+          
+          .mapping-controls {
+              display: flex;
+              gap: 10px;
+              margin-top: 15px;
+          }
+          
+          .group-controls {
+              display: flex;
+              gap: 10px;
+              margin-top: 10px;
+          }
+          
+          .btn {
+              padding: 8px 12px;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 14px;
+              transition: background 0.3s;
+          }
+          
+          .btn-add {
+              background: #27ae60;
+              color: white;
+          }
+          
+          .btn-add:hover {
+              background: #219a52;
+          }
+          
+          .btn-remove {
+              background: #e74c3c;
+              color: white;
+              padding: 4px 8px;
+          }
+          
+          .btn-remove:hover {
+              background: #c0392b;
+          }
+          
+          .btn-add-target {
+              background: #2980b9;
+              color: white;
+              font-size: 12px;
+              padding: 4px 8px;
+          }
+          
+          .btn-add-target:hover {
+              background: #2471a3;
+          }
+          
+          .type-select {
+              padding: 4px 8px;
+              border-radius: 4px;
+              background: #404040;
+              color: #e0e0e0;
+              border: 1px solid #505050;
+          }
       </style>
   </head>
   <body>
@@ -298,6 +391,41 @@ export default async function () {
                          value="${currentConfig.osc.targetPort}" min="1" max="65535">
               </div>
 
+              <div class="osc-mappings">
+                  <h3>OSC Mappings</h3>
+                  <div id="mappingsList">
+                      ${Object.entries(currentConfig.osc.remapped).map(([source, targets]) => `
+                          <div class="mapping-group" data-source="${source}">
+                              <div class="mapping-source">
+                                  <input type="text" class="form-control" placeholder="Source Path" value="${source}">
+                              </div>
+                              <div class="mapping-targets">
+                                  ${targets.map(target => `
+                                      <div class="mapping-item">
+                                          <input type="text" class="form-control" placeholder="Target Path" value="${target.path}">
+                                          <select class="type-select">
+                                              ${Object.entries(OSC_TYPE)
+                                                  .filter(([key]) => isNaN(Number(key)))
+                                                  .map(([key, value]) => 
+                                                      `<option value="${value}" ${value === target.type ? 'selected' : ''}>${key}</option>`
+                                                  ).join('')}
+                                          </select>
+                                          <button type="button" class="btn btn-remove" onclick="removeTarget(this)">×</button>
+                                      </div>
+                                  `).join('')}
+                              </div>
+                              <div class="group-controls">
+                                  <button type="button" class="btn btn-add-target" onclick="addTarget(this)">Add Target</button>
+                                  <button type="button" class="btn btn-remove" onclick="removeMapping(this)">Remove Mapping</button>
+                              </div>
+                          </div>
+                      `).join('')}
+                  </div>
+                  <div class="mapping-controls">
+                      <button type="button" class="btn btn-add" onclick="addNewMapping()">Add New Mapping</button>
+                  </div>
+              </div>
+
               <button type="submit" class="save-btn">Save Configuration</button>
           </form>
           <div id="status" class="status"></div>
@@ -309,6 +437,73 @@ export default async function () {
       </div>
 
       <script>
+          // Expose the SELECTED_RUNNER enum to frontend
+          const SELECTED_RUNNER = ${JSON.stringify(Object.fromEntries(
+              Object.entries(SELECTED_RUNNER).filter(([key]) => isNaN(Number(key)))
+          ))}
+
+          function addNewMapping() {
+              const mappingsList = document.getElementById('mappingsList')
+              const newMapping = document.createElement('div')
+              newMapping.className = 'mapping-group'
+              newMapping.innerHTML = \`
+                  <div class="mapping-source">
+                      <input type="text" class="form-control" placeholder="Source Path">
+                  </div>
+                  <div class="mapping-targets">
+                      <div class="mapping-item">
+                          <input type="text" class="form-control" placeholder="Target Path">
+                          <select class="type-select">
+                              ${Object.entries(OSC_TYPE)
+                                  .filter(([key]) => isNaN(Number(key)))
+                                  .map(([key, value]) => 
+                                      `<option value="${value}">${key}</option>`
+                                  ).join('')}
+                          </select>
+                          <button type="button" class="btn btn-remove" onclick="removeTarget(this)">×</button>
+                      </div>
+                  </div>
+                  <div class="group-controls">
+                      <button type="button" class="btn btn-add-target" onclick="addTarget(this)">Add Target</button>
+                      <button type="button" class="btn btn-remove" onclick="removeMapping(this)">Remove Mapping</button>
+                  </div>
+              \`
+              mappingsList.appendChild(newMapping)
+          }
+
+          function addTarget(button) {
+              const targetsList = button.closest('.mapping-group').querySelector('.mapping-targets')
+              const newTarget = document.createElement('div')
+              newTarget.className = 'mapping-item'
+              newTarget.innerHTML = \`
+                  <input type="text" class="form-control" placeholder="Target Path">
+                  <select class="type-select">
+                      ${Object.entries(OSC_TYPE)
+                          .filter(([key]) => isNaN(Number(key)))
+                          .map(([key, value]) => 
+                              `<option value="${value}">${key}</option>`
+                          ).join('')}
+                  </select>
+                  <button type="button" class="btn btn-remove" onclick="removeTarget(this)">×</button>
+              \`
+              targetsList.appendChild(newTarget)
+          }
+
+          function removeTarget(button) {
+              const mappingItem = button.closest('.mapping-item')
+              const mappingTargets = mappingItem.parentElement
+              if (mappingTargets.children.length > 1) {
+                  mappingItem.remove()
+              } else {
+                  // If this is the last target, remove the entire mapping group
+                  mappingItem.closest('.mapping-group').remove()
+              }
+          }
+
+          function removeMapping(button) {
+              button.closest('.mapping-group').remove()
+          }
+
           document.getElementById('configForm').addEventListener('submit', async (e) => {
               e.preventDefault()
               const software = document.getElementById('software').value
@@ -327,6 +522,26 @@ export default async function () {
                   return
               }
 
+              // Collect OSC mappings
+              const mappings = {}
+              document.querySelectorAll('.mapping-group').forEach(group => {
+                  const sourcePath = group.querySelector('.mapping-source input').value
+                  if (sourcePath) {
+                      mappings[sourcePath] = []
+                      group.querySelectorAll('.mapping-item').forEach(item => {
+                          const targetPath = item.querySelector('input').value
+                          const type = parseInt(item.querySelector('.type-select').value)
+                          if (targetPath) {
+                              mappings[sourcePath].push({ path: targetPath, type })
+                          }
+                      })
+                      // Remove empty mappings
+                      if (mappings[sourcePath].length === 0) {
+                          delete mappings[sourcePath]
+                      }
+                  }
+              })
+
               try {
                   const response = await fetch('/config', {
                       method: 'POST',
@@ -334,10 +549,11 @@ export default async function () {
                           'Content-Type': 'application/json',
                       },
                       body: JSON.stringify({ 
-                          software,
+                          selectedRunner: SELECTED_RUNNER[software],
                           osc: {
                               enabled: oscEnabled,
-                              targetPort: oscPort
+                              targetPort: oscPort,
+                              remapped: mappings
                           }
                       }),
                   })

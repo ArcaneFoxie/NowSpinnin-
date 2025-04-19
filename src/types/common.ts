@@ -1,3 +1,12 @@
+export interface CONFIG { 
+  selectedRunner: SELECTED_RUNNER,
+  osc: {
+    enabled: boolean,
+    targetPort: number,
+    remapped: Record<string, { path: string, type: OSC_TYPE }[]>
+  }
+}
+
 export type additionalData = Record<string, string | number | boolean | null>;
 
 export interface Song { 
