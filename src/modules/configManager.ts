@@ -19,9 +19,7 @@ const defaultConfig: CONFIG = {
   osc: {
     enabled: false,
     targetPort: 7000,
-    remapped: {
-
-    }
+    remapped: {}
   }
 }
 
@@ -56,17 +54,7 @@ export class configManager {
 
   constructor () {
     this.configFile = join(baseDirectory, 'config.json')
-    this._config = this.wrapWithProxy({ ...defaultConfig })
-  }
-
-  private wrapWithProxy(config: CONFIG): CONFIG {
-    return new Proxy(config, {
-      set: (target, property, value) => {
-        target[property as keyof typeof target] = value
-        void this.save()
-        return true
-      }
-    })
+    this._config = { ...defaultConfig }
   }
 
   get config(): CONFIG {
@@ -74,7 +62,7 @@ export class configManager {
   }
 
   set config(value: CONFIG) {
-    this._config = this.wrapWithProxy(value)
+    this._config = value
     void this.save()
   }
 
@@ -82,11 +70,10 @@ export class configManager {
     try {
       const loadedRaw = await readFile(this.configFile, "utf-8")
       const loadedConfig = JSON.parse(loadedRaw) as Partial<CONFIG>
-      const mergedConfig = deepMerge({ ...defaultConfig }, loadedConfig)
-      this.config = mergedConfig
+      this._config = deepMerge({ ...defaultConfig }, loadedConfig)
     } catch (e) {
       console.warn("Error loading config, using defaults:", e)
-      this.config = { ...defaultConfig }
+      this._config = { ...defaultConfig }
     }
   }
 

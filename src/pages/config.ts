@@ -1,9 +1,9 @@
 import { join } from 'path'
 import { readdir } from 'fs/promises'
 import { SELECTED_RUNNER } from './../types/common'
+import configManager from './../modules/configManager'
 import http from './../modules/http'
 import pkg from '../../package.json'
-import configManager from './../modules/configManager'
 
 const GITHUB_REPO = 'ArcaneFoxie/NowSpinnin-'
 
@@ -60,6 +60,7 @@ export default async function () {
   const currentVersion = pkg.version
   const latestVersion = await checkLatestVersion()
   const isOutdated = latestVersion && currentVersion < latestVersion
+  const currentConfig = configManager.config
 
   return `
   <!DOCTYPE html>
@@ -93,7 +94,7 @@ export default async function () {
           h2 {
               color: #fff;
           }
-          .software-select {
+          .software-select, .form-control {
               width: 100%;
               padding: 12px;
               margin-bottom: 20px;
@@ -103,8 +104,9 @@ export default async function () {
               transition: border-color 0.3s;
               background: #363636;
               color: #e0e0e0;
+              box-sizing: border-box;
           }
-          .software-select:focus {
+          .software-select:focus, .form-control:focus {
               outline: none;
               border-color: #3498db;
           }
@@ -180,6 +182,83 @@ export default async function () {
               text-decoration: underline;
               color: #5dade2;
           }
+          .form-group {
+              margin-bottom: 20px;
+          }
+          
+          .form-group label {
+              display: block;
+              margin-bottom: 8px;
+              color: #e0e0e0;
+          }
+          
+          input[type="number"] {
+              -moz-appearance: textfield;
+          }
+          
+          input[type="number"]::-webkit-inner-spin-button,
+          input[type="number"]::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+          }
+          
+          .toggle-container {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+          }
+          
+          .toggle-switch {
+              position: relative;
+              display: inline-block;
+              width: 60px;
+              height: 34px;
+          }
+          
+          .toggle-switch input {
+              opacity: 0;
+              width: 0;
+              height: 0;
+          }
+          
+          .toggle-slider {
+              position: absolute;
+              cursor: pointer;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: #404040;
+              transition: .4s;
+              border-radius: 34px;
+          }
+          
+          .toggle-slider:before {
+              position: absolute;
+              content: "";
+              height: 26px;
+              width: 26px;
+              left: 4px;
+              bottom: 4px;
+              background-color: #e0e0e0;
+              transition: .4s;
+              border-radius: 50%;
+          }
+          
+          input:checked + .toggle-slider {
+              background-color: #3498db;
+          }
+          
+          input:checked + .toggle-slider:before {
+              transform: translateX(26px);
+          }
+          
+          .section-title {
+              margin-top: 30px;
+              margin-bottom: 20px;
+              padding-bottom: 10px;
+              border-bottom: 1px solid #404040;
+          }
       </style>
   </head>
   <body>
@@ -194,9 +273,31 @@ export default async function () {
           </div>
 
           <form id="configForm">
-              <select class="software-select" id="software" name="software">
-                ${getSupportedRunners()}
-              </select>
+              <h2 class="section-title">DJ Software</h2>
+              <div class="form-group">
+                  <label for="software">Select DJ Software:</label>
+                  <select class="software-select" id="software" name="software">
+                    ${getSupportedRunners()}
+                  </select>
+              </div>
+
+              <h2 class="section-title">OSC Settings</h2>
+              <div class="form-group">
+                  <div class="toggle-container">
+                      <label for="oscEnabled">Enable OSC:</label>
+                      <label class="toggle-switch">
+                          <input type="checkbox" id="oscEnabled" name="oscEnabled" ${currentConfig.osc.enabled ? 'checked' : ''}>
+                          <span class="toggle-slider"></span>
+                      </label>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="oscPort">OSC Target Port:</label>
+                  <input type="number" class="form-control" id="oscPort" name="oscPort" 
+                         value="${currentConfig.osc.targetPort}" min="1" max="65535">
+              </div>
+
               <button type="submit" class="save-btn">Save Configuration</button>
           </form>
           <div id="status" class="status"></div>
@@ -211,6 +312,8 @@ export default async function () {
           document.getElementById('configForm').addEventListener('submit', async (e) => {
               e.preventDefault()
               const software = document.getElementById('software').value
+              const oscEnabled = document.getElementById('oscEnabled').checked
+              const oscPort = parseInt(document.getElementById('oscPort').value, 10)
               
               if (!software) {
                   document.getElementById('status').textContent = 'Please select a DJ software'
@@ -218,18 +321,30 @@ export default async function () {
                   return
               }
 
+              if (oscEnabled && (isNaN(oscPort) || oscPort < 1 || oscPort > 65535)) {
+                  document.getElementById('status').textContent = 'Please enter a valid port number (1-65535)'
+                  document.getElementById('status').style.color = '#e74c3c'
+                  return
+              }
+
               try {
-                  const response = await fetch('/config/software', {
+                  const response = await fetch('/config', {
                       method: 'POST',
                       headers: {
                           'Content-Type': 'application/json',
                       },
-                      body: JSON.stringify({ software }),
+                      body: JSON.stringify({ 
+                          software,
+                          osc: {
+                              enabled: oscEnabled,
+                              targetPort: oscPort
+                          }
+                      }),
                   })
                   
                   const data = await response.json()
                   if (data.success) {
-                      document.getElementById('status').textContent = \`Configuration saved: \${software}\`
+                      document.getElementById('status').textContent = 'Configuration saved successfully'
                       document.getElementById('status').style.color = '#27ae60'
                   }
               } catch (error) {
