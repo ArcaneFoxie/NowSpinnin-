@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { homedir, platform } from 'os'
+import { getMostRecentFile } from 'src/modules/paths'
+import { homedir } from 'os'
 import { join } from 'path'
 import Provider from "src/types/provider"
 import sqlite from 'node:sqlite'
@@ -12,18 +13,28 @@ class Mixxx extends Provider {
     super()
   }
 
-  getDbPath () {
-    const paths: Record<string, () => string> = {
-      win32: () => join(process.env.LOCALAPPDATA!, 'Mixxx', 'mixxxdb.sqlite'),
-      linux: () => join(homedir(), '.var', 'app', 'org.mixxx.Mixxx', '.mixxx', 'mixxxdb.sqlite'),
-      darwin: () => join(homedir(), 'Library', 'Containers', 'org.mixxx.mixxx', 'Data', 'Library', 'Application Support', 'Mixxx', 'mixxxdb.sqlite')
+  async getLatestLinuxPath () {
+    const dir = join(homedir(), '.mixxx', 'mixxxdb.sqlite')
+    const fpDir = join(homedir(), '.var', 'app', 'org.mixxx.Mixxx', '.mixxx', 'mixxxdb.sqlite')
+
+    return getMostRecentFile(dir, fpDir)
+  }
+
+  async getDbPath () {
+    const paths: Record<string, () => Promise<string | null>> = {
+      win32: async () => join(process.env.LOCALAPPDATA!, 'Mixxx', 'mixxxdb.sqlite'),
+      linux: () => this.getLatestLinuxPath(),
+      darwin: async () => join(homedir(), 'Library', 'Containers', 'org.mixxx.mixxx', 'Data', 'Library', 'Application Support', 'Mixxx', 'mixxxdb.sqlite')
     }
   
     return paths[process.platform]()
   }
 
   async create() {
-    this.db = new sqlite.DatabaseSync(this.getDbPath(), { readOnly: true })
+    const p = await this.getDbPath()
+    if (!p) { return }
+
+    this.db = new sqlite.DatabaseSync(p, { readOnly: true })
   }
 
   async getLatestSong() {

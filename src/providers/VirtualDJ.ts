@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
 import { homedir } from 'os'
 import { queryRegistry } from '../modules/common'
 import { readdir, readFile, stat } from 'fs/promises'
