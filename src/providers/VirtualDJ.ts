@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { homedir } from 'os'
+import { queryRegistry } from '../modules/common'
 import { readdir, readFile, stat } from 'fs/promises'
 import path, { join } from 'path'
 import Provider from "src/types/provider"
 import type { Song } from "src/types/common"
 
-// TODO: Make this better... this cant be the best way...
 class VirtualDJ extends Provider {
   cachedSong: Song
   filePath: string
@@ -25,8 +25,13 @@ class VirtualDJ extends Provider {
     }
   }
 
+  private async getVirtualDJPath(): Promise<string> {
+    const homeFolder = await queryRegistry('HKCU\\Software\\VirtualDJ', 'HomeFolder')
+    return homeFolder ? join(homeFolder, 'History') : join(homedir(), 'Documents', 'VirtualDJ', 'History')
+  }
+
   async create() {
-    this.filePath = join(homedir(), 'Documents', 'VirtualDJ', 'History')
+    this.filePath = await this.getVirtualDJPath()
     this.tracklistPath = join(this.filePath, 'tracklist.txt')
   }
 

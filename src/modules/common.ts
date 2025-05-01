@@ -8,6 +8,21 @@ import Stream from 'stream'
 import Webserver from './http'
 import { platform } from 'os'
 
+export async function queryRegistry(key: string, value: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    exec(`reg query "${key}" /v ${value}`, (error, stdout) => {
+      if (error) {
+        resolve(null)
+        return
+      }
+
+      const regex = /REG_SZ\s+(.+)/g
+      const match = regex.exec(stdout)
+      resolve(match?.[1]?.trim() ?? null)
+    })
+  })
+}
+
 export async function OpenDefaultToPage (): Promise<string> {
   const url = `http://localhost:${Webserver.port}/config`
   
