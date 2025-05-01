@@ -76,6 +76,18 @@ Connect to `ws://localhost:4578` for real-time track updates. The WebSocket send
 }
 ```
 
+### OSC (Open Sound Control)
+
+NowSpinnin' supports OSC messages for real-time track updates. The following OSC addresses will fire for all supported DJ software:
+
+```
+/NowSpinnin/songupdate/absolutepath
+/NowSpinnin/songupdate/title
+/NowSpinnin/songupdate/artist
+```
+
+Additional data can be remapped using the UI. For examples of OSC message formats and available values, check out the [examples folder](https://github.com/ArcaneFoxie/NowSpinnin-/tree/main/examples).
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
