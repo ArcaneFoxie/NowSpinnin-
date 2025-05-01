@@ -29,7 +29,9 @@ class OSC {
     if (!configManager.config.osc.enabled) { return }
 
     const pscPath = `/NowSpinnin/${path}`
-    // this.client.send(pscPath, data)
+    if (!path.startsWith('additionalData')) {
+      this.client.send(pscPath, data)
+    }
 
     if (config.config.osc.remapped[pscPath]) {
       for (const subPath of config.config.osc.remapped[pscPath]) {
