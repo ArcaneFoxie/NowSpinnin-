@@ -41,8 +41,7 @@ class Mixxx extends Provider {
     const q = this.db.prepare(`
       SELECT 
           pt.track_id,
-          l.artist,
-          l.title,
+          l.*,
           tl.location
       FROM 
           playlistTracks pt
@@ -62,7 +61,8 @@ class Mixxx extends Provider {
       artist: r.artist,
       title: r.title,
       absolutepath: r.location,
-      coverArt: null
+      coverArt: null,
+      additionalData: r
     }
 
     return ret as Song
