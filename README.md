@@ -25,6 +25,7 @@ Come hang out, get support, share your setups, or just vibe with us:\
 
 ### MacOS
 - Traktor
+- Mixxx
 
 Want to see support for more platforms or operating systems? [Open an issue](https://github.com/ArcaneFoxie/NowSpinnin-/issues) to let us know!
 

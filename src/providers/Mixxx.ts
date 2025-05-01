@@ -16,6 +16,7 @@ class Mixxx extends Provider {
     const paths: Record<string, () => string> = {
       win32: () => join(process.env.LOCALAPPDATA!, 'Mixxx', 'mixxxdb.sqlite'),
       linux: () => join(homedir(), '.var', 'app', 'org.mixxx.Mixxx', '.mixxx', 'mixxxdb.sqlite'),
+      darwin: () => join(homedir(), 'Library', 'Containers', 'org.mixxx.mixxx', 'Data', 'Library', 'Application Support', 'Mixxx', 'mixxxdb.sqlite')
     }
   
     return paths[process.platform]()
