@@ -1,5 +1,5 @@
-import { flattenJson, queryRegistry } from '../modules/common'
 import { homedir } from 'os'
+import { queryRegistry } from '../modules/common'
 import { readdir, readFile, stat } from 'fs/promises'
 import { XMLParser } from 'fast-xml-parser'
 import path, { join } from 'path'
@@ -32,7 +32,7 @@ class VirtualDJ extends Provider {
     const jObj = parser.parse(data) as { VirtualDJ_Database: { Song: { FilePath: string }[] } }
 
     const targetSong = jObj.VirtualDJ_Database.Song.filter(s => s.FilePath === filepath)
-    return targetSong ? flattenJson(targetSong[0]) : null
+    return targetSong ? targetSong[0] : null
   }
 
   private async getVirtualDJPath(): Promise<string> {

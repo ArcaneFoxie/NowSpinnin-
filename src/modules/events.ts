@@ -1,7 +1,8 @@
+import { flattenJson } from "./common"
 import { SELECTED_RUNNER, type Song } from "src/types/common"
-import ws from "./ws"
-import osc from "./osc"
 import app from './runner'
+import osc from "./osc"
+import ws from "./ws"
 
 class Events {
   songData: Song
@@ -27,12 +28,13 @@ class Events {
     if (song.artist) { osc.sendMessage('songupdate/artist', song.artist) }
     
     if (song.additionalData) {
-      const keys = Object.keys(song.additionalData)
+      const data = flattenJson(song.additionalData)
+      const keys = Object.keys(data)
 
       for (const key of keys) {
-        if (!song.additionalData[key]) { continue }
-
-        osc.sendMessage(`additionalData/${SELECTED_RUNNER[app.selectedRunner]}/${key}`, song.additionalData[key])
+        if (!data[key]) { continue }
+        
+        osc.sendMessage(`additionalData/${SELECTED_RUNNER[app.selectedRunner]}/${key}`, data[key])
       }
     }
   }

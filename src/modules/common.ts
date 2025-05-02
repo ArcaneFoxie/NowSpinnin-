@@ -85,7 +85,7 @@ export async function extractSEAAssets () {
   }
 }
 
-export function flattenJson(obj: any, prefix = ''): Record<string, any> {
+export function flattenJson(obj: any, prefix = ''): Record<string, string | number | boolean> {
   const result: Record<string, any> = {};
 
   for (const key in obj) {
