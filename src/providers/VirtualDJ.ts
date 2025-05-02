@@ -1,6 +1,7 @@
+import { flattenJson, queryRegistry } from '../modules/common'
 import { homedir } from 'os'
-import { queryRegistry } from '../modules/common'
 import { readdir, readFile, stat } from 'fs/promises'
+import { XMLParser } from 'fast-xml-parser'
 import path, { join } from 'path'
 import Provider from "src/types/provider"
 import type { Song } from "src/types/common"
@@ -10,6 +11,7 @@ class VirtualDJ extends Provider {
   filePath: string
   lastModified: number
   tracklistPath: string
+  homeFolder: string
 
   constructor () {
     super()
@@ -24,13 +26,23 @@ class VirtualDJ extends Provider {
     }
   }
 
+  private async fetchSongFromDatabase (filepath: string): Promise<Record<string, any> | null> {
+    const data = await readFile(join(this.homeFolder, 'database.xml'))
+    const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '' })
+    const jObj = parser.parse(data) as { VirtualDJ_Database: { Song: { FilePath: string }[] } }
+
+    const targetSong = jObj.VirtualDJ_Database.Song.filter(s => s.FilePath === filepath)
+    return targetSong ? flattenJson(targetSong[0]) : null
+  }
+
   private async getVirtualDJPath(): Promise<string> {
     const homeFolder = await queryRegistry('HKCU\\Software\\VirtualDJ', 'HomeFolder')
-    return homeFolder ? join(homeFolder, 'History') : join(homedir(), 'Documents', 'VirtualDJ', 'History')
+    return homeFolder ?? join(homedir(), 'Documents', 'VirtualDJ')
   }
 
   async create() {
-    this.filePath = await this.getVirtualDJPath()
+    this.homeFolder = await this.getVirtualDJPath()
+    this.filePath = join(this.homeFolder, 'History')
     this.tracklistPath = join(this.filePath, 'tracklist.txt')
   }
 
@@ -50,17 +62,18 @@ class VirtualDJ extends Provider {
     const artist = this.extractTag('artist', lastTwoLines[0])
     const title = this.extractTag('title', lastTwoLines[0])
 
+    const additionalData = await this.fetchSongFromDatabase(lastTwoLines[1])
+
     const ret = { 
       artist: artist,
       title: title,
       absolutepath: lastTwoLines[1],
       coverArt: null,
-      additionalData: {}
+      additionalData: additionalData
     }
 
-    this.cachedSong = ret
-
-    return ret as Song
+    this.cachedSong = ret as Song
+    return this.cachedSong
   }
 
   async dispose() {

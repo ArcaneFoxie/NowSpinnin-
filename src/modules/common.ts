@@ -84,3 +84,36 @@ export async function extractSEAAssets () {
     await makeFile(targetFile, asset)
   }
 }
+
+export function flattenJson(obj: any, prefix = ''): Record<string, any> {
+  const result: Record<string, any> = {};
+
+  for (const key in obj) {
+    if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const value = obj[key];
+    const fullPath = prefix ? `${prefix}/${key}` : key;
+
+    if (typeof value === 'object' && value !== null) {
+      if (Array.isArray(value)) {
+        value.forEach((item, index) => {
+          const arrayPath = `${fullPath}/${index}`;
+          if (typeof item === 'object' && item !== null) {
+            Object.assign(result, flattenJson(item, arrayPath));
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            result[arrayPath] = item;
+          }
+        });
+      } else {
+        Object.assign(result, flattenJson(value, fullPath));
+      }
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      result[fullPath] = value;
+    }
+  }
+
+  return result;
+}
