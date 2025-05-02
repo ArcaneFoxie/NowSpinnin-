@@ -17,14 +17,14 @@ The `/nowplaying` endpoint returns the following JSON structure:
     "album": "Now That’s What I Call Music! 113",
     "albumartist": "Various Artists",
     "artist": "Luude & Mattafix",
-    "bitrate": 1017,
-    "comment": "",
+    "bitrate": 1023,
+    "comment": "what a bop",
     "composer": "",
     "coverimage": "",
     "title": "Big City Life",
     "smart_advisor": null,
     "bpm": 87,
-    "max_val_gain": -14.758705139160156,
+    "max_val_gain": -14.758700370788574,
     "tracknumber": 4,
     "drive": "C:/",
     "filepath": "C:/Users/Foxie/Music/Tidal Sets/Big City Life",
@@ -34,16 +34,16 @@ The `/nowplaying` endpoint returns the following JSON structure:
     "key": 6,
     "genre": "Pop",
     "filesize": 18645421,
-    "length": 146.712,
+    "length": 146.657,
     "rating": 0,
-    "filedate": "2025-05-01T23:48:55",
+    "filedate": "2025-05-02T01:14:22",
     "year": 2022,
-    "playcount": 7,
+    "playcount": 8,
     "first_played": "2025-04-13T16:16:32",
-    "last_played": "2025-05-01T23:48:55",
+    "last_played": "2025-05-02T01:14:28",
     "first_seen": "2025-04-09T21:07:48",
     "tags_read": 1,
-    "danceability": 1.075122356414795,
+    "danceability": 1.075119972229004,
     "samplerate": 44100,
     "stores": null
   }
@@ -68,6 +68,7 @@ These paths provide additional DJUCED-specific data. Note that these paths requi
 /NowSpinnin/additionalData/DJUCED/albumartist
 /NowSpinnin/additionalData/DJUCED/artist
 /NowSpinnin/additionalData/DJUCED/bitrate
+/NowSpinnin/additionalData/DJUCED/comment
 /NowSpinnin/additionalData/DJUCED/title
 /NowSpinnin/additionalData/DJUCED/bpm
 /NowSpinnin/additionalData/DJUCED/max_val_gain

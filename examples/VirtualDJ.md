@@ -13,56 +13,82 @@ The `/nowplaying` endpoint returns the following JSON structure:
   "absolutepath": "C:\\Users\\Foxie\\Music\\Tidal Sets\\Big City Life\\Big City Life - Luude & Mattafix.flac",
   "coverArt": "",
   "additionalData": {
-    "Tags/Author": "Luude & Mattafix",
-    "Tags/Title": "Big City Life",
-    "Tags/Genre": "Pop",
-    "Tags/Album": "Now That’s What I Call Music! 113",
-    "Tags/Label": "NOW Music",
-    "Tags/TrackNumber": "4",
-    "Tags/Year": "2022",
-    "Tags/Bpm": "0.689655",
-    "Tags/Flag": "1",
-    "Infos/SongLength": "146.711701",
-    "Infos/LastModified": "1746141344",
-    "Infos/FirstSeen": "1744583194",
-    "Infos/FirstPlay": "1746062063",
-    "Infos/LastPlay": "1746141344",
-    "Infos/PlayCount": "2",
-    "Infos/Bitrate": "1017",
-    "Infos/Cover": "1",
-    "Scan/Version": "801",
-    "Scan/Bpm": "0.689660",
-    "Scan/AltBpm": "0.517234",
-    "Scan/Volume": "1.539761",
-    "Scan/Key": "Eb",
-    "Scan/Flag": "32768",
-    "Poi/0/Pos": "44.138321",
-    "Poi/0/Type": "beatgrid",
-    "Poi/1/Type": "automix",
-    "Poi/1/Point": "realStart",
-    "Poi/2/Pos": "144.927347",
-    "Poi/2/Type": "automix",
-    "Poi/2/Point": "realEnd",
-    "Poi/3/Pos": "3.10",
-    "Poi/3/Type": "automix",
-    "Poi/3/Point": "fadeStart",
-    "Poi/4/Pos": "143.60",
-    "Poi/4/Type": "automix",
-    "Poi/4/Point": "fadeEnd",
-    "Poi/5/Pos": "44.139683",
-    "Poi/5/Type": "automix",
-    "Poi/5/Point": "cutStart",
-    "Poi/6/Pos": "142.069116",
-    "Poi/6/Type": "automix",
-    "Poi/6/Point": "cutEnd",
-    "Poi/7/Name": "Break 1",
-    "Poi/7/Pos": "82.758821",
-    "Poi/7/Type": "remix",
-    "Poi/8/Name": "End Break 1",
-    "Poi/8/Pos": "106.207347",
-    "Poi/8/Type": "remix",
+    "Tags": {
+      "Author": "Luude & Mattafix",
+      "Title": "Big City Life",
+      "Genre": "Pop",
+      "Album": "Now That’s What I Call Music! 113",
+      "Label": "NOW Music",
+      "TrackNumber": "4",
+      "Year": "2022",
+      "Bpm": "0.689655",
+      "Flag": "1"
+    },
+    "Infos": {
+      "SongLength": "146.711701",
+      "LastModified": "1746145302",
+      "FirstSeen": "1744583194",
+      "FirstPlay": "1746062063",
+      "LastPlay": "1746145302",
+      "PlayCount": "5",
+      "Bitrate": "1017",
+      "Cover": "1"
+    },
+    "Scan": {
+      "Version": "801",
+      "Bpm": "0.689660",
+      "AltBpm": "0.517234",
+      "Volume": "1.539761",
+      "Key": "Eb",
+      "Flag": "32768"
+    },
+    "Poi": [
+      {
+        "Pos": "44.138321",
+        "Type": "beatgrid"
+      },
+      {
+        "Type": "automix",
+        "Point": "realStart"
+      },
+      {
+        "Pos": "144.927347",
+        "Type": "automix",
+        "Point": "realEnd"
+      },
+      {
+        "Pos": "3.10",
+        "Type": "automix",
+        "Point": "fadeStart"
+      },
+      {
+        "Pos": "143.60",
+        "Type": "automix",
+        "Point": "fadeEnd"
+      },
+      {
+        "Pos": "44.139683",
+        "Type": "automix",
+        "Point": "cutStart"
+      },
+      {
+        "Pos": "142.069116",
+        "Type": "automix",
+        "Point": "cutEnd"
+      },
+      {
+        "Name": "Break 1",
+        "Pos": "82.758821",
+        "Type": "remix"
+      },
+      {
+        "Name": "End Break 1",
+        "Pos": "106.207347",
+        "Type": "remix"
+      }
+    ],
     "FilePath": "C:\\Users\\Foxie\\Music\\Tidal Sets\\Big City Life\\Big City Life - Luude & Mattafix.flac",
-    "FileSize": "18645421"
+    "FileSize": "18755403"
   }
 }
 ```

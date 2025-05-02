@@ -37,7 +37,7 @@ The `/nowplaying` endpoint returns the following JSON structure:
     "header_parsed": 1,
     "filetype": "flac",
     "replaygain": 0.2777548100860277,
-    "timesplayed": 1,
+    "timesplayed": 2,
     "rating": 0,
     "key": "Eb",
     "beats": {
@@ -188,7 +188,7 @@ The `/nowplaying` endpoint returns the following JSON structure:
       "30": 51,
       "31": 110
     },
-    "last_played_at": "2025-04-13 19:15:31",
+    "last_played_at": "2025-05-01 23:07:15",
     "source_synchronized_ms": 1744569359521
   }
 }
@@ -228,10 +228,95 @@ These paths provide additional Mixxx-specific data. Note that these paths requir
 /NowSpinnin/additionalData/Mixxx/replaygain
 /NowSpinnin/additionalData/Mixxx/timesplayed
 /NowSpinnin/additionalData/Mixxx/key
-/NowSpinnin/additionalData/Mixxx/beats
+/NowSpinnin/additionalData/Mixxx/beats/0
+/NowSpinnin/additionalData/Mixxx/beats/1
+/NowSpinnin/additionalData/Mixxx/beats/2
+/NowSpinnin/additionalData/Mixxx/beats/8
+/NowSpinnin/additionalData/Mixxx/beats/9
+/NowSpinnin/additionalData/Mixxx/beats/10
+/NowSpinnin/additionalData/Mixxx/beats/11
+/NowSpinnin/additionalData/Mixxx/beats/12
+/NowSpinnin/additionalData/Mixxx/beats/13
+/NowSpinnin/additionalData/Mixxx/beats/14
+/NowSpinnin/additionalData/Mixxx/beats/15
+/NowSpinnin/additionalData/Mixxx/beats/16
 /NowSpinnin/additionalData/Mixxx/beats_version
 /NowSpinnin/additionalData/Mixxx/beats_sub_version
-/NowSpinnin/additionalData/Mixxx/keys
+/NowSpinnin/additionalData/Mixxx/keys/0
+/NowSpinnin/additionalData/Mixxx/keys/1
+/NowSpinnin/additionalData/Mixxx/keys/2
+/NowSpinnin/additionalData/Mixxx/keys/3
+/NowSpinnin/additionalData/Mixxx/keys/4
+/NowSpinnin/additionalData/Mixxx/keys/5
+/NowSpinnin/additionalData/Mixxx/keys/6
+/NowSpinnin/additionalData/Mixxx/keys/7
+/NowSpinnin/additionalData/Mixxx/keys/8
+/NowSpinnin/additionalData/Mixxx/keys/9
+/NowSpinnin/additionalData/Mixxx/keys/10
+/NowSpinnin/additionalData/Mixxx/keys/11
+/NowSpinnin/additionalData/Mixxx/keys/12
+/NowSpinnin/additionalData/Mixxx/keys/13
+/NowSpinnin/additionalData/Mixxx/keys/14
+/NowSpinnin/additionalData/Mixxx/keys/15
+/NowSpinnin/additionalData/Mixxx/keys/16
+/NowSpinnin/additionalData/Mixxx/keys/17
+/NowSpinnin/additionalData/Mixxx/keys/18
+/NowSpinnin/additionalData/Mixxx/keys/19
+/NowSpinnin/additionalData/Mixxx/keys/20
+/NowSpinnin/additionalData/Mixxx/keys/21
+/NowSpinnin/additionalData/Mixxx/keys/22
+/NowSpinnin/additionalData/Mixxx/keys/23
+/NowSpinnin/additionalData/Mixxx/keys/24
+/NowSpinnin/additionalData/Mixxx/keys/25
+/NowSpinnin/additionalData/Mixxx/keys/26
+/NowSpinnin/additionalData/Mixxx/keys/27
+/NowSpinnin/additionalData/Mixxx/keys/28
+/NowSpinnin/additionalData/Mixxx/keys/29
+/NowSpinnin/additionalData/Mixxx/keys/30
+/NowSpinnin/additionalData/Mixxx/keys/31
+/NowSpinnin/additionalData/Mixxx/keys/32
+/NowSpinnin/additionalData/Mixxx/keys/33
+/NowSpinnin/additionalData/Mixxx/keys/34
+/NowSpinnin/additionalData/Mixxx/keys/35
+/NowSpinnin/additionalData/Mixxx/keys/36
+/NowSpinnin/additionalData/Mixxx/keys/37
+/NowSpinnin/additionalData/Mixxx/keys/38
+/NowSpinnin/additionalData/Mixxx/keys/39
+/NowSpinnin/additionalData/Mixxx/keys/40
+/NowSpinnin/additionalData/Mixxx/keys/41
+/NowSpinnin/additionalData/Mixxx/keys/42
+/NowSpinnin/additionalData/Mixxx/keys/43
+/NowSpinnin/additionalData/Mixxx/keys/44
+/NowSpinnin/additionalData/Mixxx/keys/45
+/NowSpinnin/additionalData/Mixxx/keys/46
+/NowSpinnin/additionalData/Mixxx/keys/47
+/NowSpinnin/additionalData/Mixxx/keys/48
+/NowSpinnin/additionalData/Mixxx/keys/49
+/NowSpinnin/additionalData/Mixxx/keys/50
+/NowSpinnin/additionalData/Mixxx/keys/51
+/NowSpinnin/additionalData/Mixxx/keys/52
+/NowSpinnin/additionalData/Mixxx/keys/53
+/NowSpinnin/additionalData/Mixxx/keys/54
+/NowSpinnin/additionalData/Mixxx/keys/55
+/NowSpinnin/additionalData/Mixxx/keys/56
+/NowSpinnin/additionalData/Mixxx/keys/57
+/NowSpinnin/additionalData/Mixxx/keys/58
+/NowSpinnin/additionalData/Mixxx/keys/59
+/NowSpinnin/additionalData/Mixxx/keys/60
+/NowSpinnin/additionalData/Mixxx/keys/61
+/NowSpinnin/additionalData/Mixxx/keys/62
+/NowSpinnin/additionalData/Mixxx/keys/63
+/NowSpinnin/additionalData/Mixxx/keys/64
+/NowSpinnin/additionalData/Mixxx/keys/65
+/NowSpinnin/additionalData/Mixxx/keys/66
+/NowSpinnin/additionalData/Mixxx/keys/67
+/NowSpinnin/additionalData/Mixxx/keys/68
+/NowSpinnin/additionalData/Mixxx/keys/69
+/NowSpinnin/additionalData/Mixxx/keys/70
+/NowSpinnin/additionalData/Mixxx/keys/71
+/NowSpinnin/additionalData/Mixxx/keys/72
+/NowSpinnin/additionalData/Mixxx/keys/73
+/NowSpinnin/additionalData/Mixxx/keys/74
 /NowSpinnin/additionalData/Mixxx/keys_version
 /NowSpinnin/additionalData/Mixxx/keys_sub_version
 /NowSpinnin/additionalData/Mixxx/key_id
@@ -242,7 +327,38 @@ These paths provide additional Mixxx-specific data. Note that these paths requir
 /NowSpinnin/additionalData/Mixxx/replaygain_peak
 /NowSpinnin/additionalData/Mixxx/tracktotal
 /NowSpinnin/additionalData/Mixxx/coverart_color
-/NowSpinnin/additionalData/Mixxx/coverart_digest
+/NowSpinnin/additionalData/Mixxx/coverart_digest/0
+/NowSpinnin/additionalData/Mixxx/coverart_digest/1
+/NowSpinnin/additionalData/Mixxx/coverart_digest/2
+/NowSpinnin/additionalData/Mixxx/coverart_digest/3
+/NowSpinnin/additionalData/Mixxx/coverart_digest/4
+/NowSpinnin/additionalData/Mixxx/coverart_digest/5
+/NowSpinnin/additionalData/Mixxx/coverart_digest/6
+/NowSpinnin/additionalData/Mixxx/coverart_digest/7
+/NowSpinnin/additionalData/Mixxx/coverart_digest/8
+/NowSpinnin/additionalData/Mixxx/coverart_digest/9
+/NowSpinnin/additionalData/Mixxx/coverart_digest/10
+/NowSpinnin/additionalData/Mixxx/coverart_digest/11
+/NowSpinnin/additionalData/Mixxx/coverart_digest/12
+/NowSpinnin/additionalData/Mixxx/coverart_digest/13
+/NowSpinnin/additionalData/Mixxx/coverart_digest/14
+/NowSpinnin/additionalData/Mixxx/coverart_digest/15
+/NowSpinnin/additionalData/Mixxx/coverart_digest/16
+/NowSpinnin/additionalData/Mixxx/coverart_digest/17
+/NowSpinnin/additionalData/Mixxx/coverart_digest/18
+/NowSpinnin/additionalData/Mixxx/coverart_digest/19
+/NowSpinnin/additionalData/Mixxx/coverart_digest/20
+/NowSpinnin/additionalData/Mixxx/coverart_digest/21
+/NowSpinnin/additionalData/Mixxx/coverart_digest/22
+/NowSpinnin/additionalData/Mixxx/coverart_digest/23
+/NowSpinnin/additionalData/Mixxx/coverart_digest/24
+/NowSpinnin/additionalData/Mixxx/coverart_digest/25
+/NowSpinnin/additionalData/Mixxx/coverart_digest/26
+/NowSpinnin/additionalData/Mixxx/coverart_digest/27
+/NowSpinnin/additionalData/Mixxx/coverart_digest/28
+/NowSpinnin/additionalData/Mixxx/coverart_digest/29
+/NowSpinnin/additionalData/Mixxx/coverart_digest/30
+/NowSpinnin/additionalData/Mixxx/coverart_digest/31
 /NowSpinnin/additionalData/Mixxx/last_played_at
 /NowSpinnin/additionalData/Mixxx/source_synchronized_ms
 ```
